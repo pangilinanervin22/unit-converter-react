@@ -22,16 +22,26 @@
 
 	height: 100vh;
 	width: 100vw;
-	background-color: #282c34;
+	background-color: #101114;
 }
 
 main {
-	@include container-center(column);
-
-	background: tomato;
-	height: 80%;
-	width: 80%;
+	background-color: #282c34;
+	width: 730px;
 	color: white;
+	padding: 4rem 2rem;
+}
+
+#header-card {
+	margin-bottom: 2rem;
+}
+
+#converter-card {
+	@include container-center;
+
+	justify-content: space-between;
+	width: 100%;
+	color: gray;
 }
 
 .header-input {
@@ -39,6 +49,75 @@ main {
 	color: black;
 }
 
-.converter-card {
-	@include container-center(column);
+.input-card {
+	display: flex;
+	flex-direction: column;
+	width: 45%;
+}
+
+span {
+	font-size: 4rem;
+}
+
+h1 {
+	color: #ffbb00;
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+input,
+select {
+	width: 100%;
+	font-size: 3rem;
+	padding: 0.2rem 3px;
+	transition: all 0.2s;
+}
+
+select {
+	font-size: 2rem;
+	opacity: 0.9;
+}
+
+option {
+	font-size: 1.3rem;
+	color: whitesmoke;
+	background: black;
+}
+
+select:focus,
+input:focus {
+	border: 1px solid #ffbb00;
+	outline: none;
+}
+
+select:hover {
+	color: whitesmoke;
+	background: black;
+}
+
+@media only screen and (max-width: 680px) {
+	main {
+		width: 95%;
+	}
+	#converter-card {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+
+		width: 100%;
+		color: gray;
+	}
+
+	.header-input,
+	.input-card {
+		width: 100%;
+	}
+
+	input {
+		font-size: 2.5rem;
+	}
+
+	#equal {
+		visibility: hidden;
+	}
 }

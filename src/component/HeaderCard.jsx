@@ -3,23 +3,23 @@ import PropTypes from "prop-types";
 import Select from "../common/Select";
 
 const options = [
-	{ value: "length", label: "length" },
-	{ value: "mass", label: "mass" },
-	{ value: "area", label: "area" },
-	{ value: "temperature", label: "temperature" },
-	{ value: "volume", label: "volume" },
-	{ value: "speed", label: "speed" },
-	{ value: "time", label: "time" },
-	{ value: "frequency", label: "frequency" },
-	{ value: "voltage", label: "voltage" },
-	{ value: "force", label: "force" },
-	{ value: "pressure", label: "pressure" },
+	{ value: "length", label: "Length" },
+	{ value: "mass", label: "Mass" },
+	{ value: "area", label: "Area" },
+	{ value: "temperature", label: "Temperature" },
+	{ value: "volume", label: "Volume" },
+	{ value: "speed", label: "Speed" },
+	{ value: "time", label: "Time" },
+	{ value: "frequency", label: "Frequency" },
+	{ value: "voltage", label: "Voltage" },
+	{ value: "force", label: "Force" },
+	{ value: "pressure", label: "Pressure" },
 ];
 
 function HeaderCard({ onChange, value }) {
 	return (
 		<React.Fragment>
-			<header className="App-header">
+			<header id="header-card">
 				<h1>Unit Converter</h1>
 				<Select
 					name="input"

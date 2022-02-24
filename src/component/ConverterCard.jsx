@@ -8,7 +8,7 @@ function ConverterCard({ firstUnit, secondUnit, onInputChange, onTypeChange, opt
 	return (
 		<React.Fragment>
 			<section id="converter-card">
-				<div id="first-input">
+				<div className="input-card">
 					<Input
 						type="number"
 						value={firstUnit.value}
@@ -22,7 +22,8 @@ function ConverterCard({ firstUnit, secondUnit, onInputChange, onTypeChange, opt
 						onChange={(e) => onTypeChange(true, e)}
 					/>
 				</div>
-				<div id="second-input">
+				<span id="equal">=</span>
+				<div className="input-card">
 					<Input
 						type="number"
 						value={secondUnit.value}
