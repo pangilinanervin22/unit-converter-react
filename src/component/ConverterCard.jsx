@@ -4,7 +4,6 @@ import Input from "./../common/Input";
 import Select from "../common/Select";
 
 function ConverterCard({ firstUnit, secondUnit, onInputChange, onTypeChange, optionSelect }) {
-	console.log(firstUnit, secondUnit);
 	return (
 		<React.Fragment>
 			<section id="converter-card">

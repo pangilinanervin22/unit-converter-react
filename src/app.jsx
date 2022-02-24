@@ -11,7 +11,6 @@ const intialState = {
 
 function App() {
 	const [state, dispatch] = useReducer(reducer, { intialState });
-	console.log("current state", state);
 
 	return (
 		<React.Fragment>
@@ -36,7 +35,6 @@ function App() {
 	);
 
 	function reducer(state, action) {
-		console.log("state change", state);
 		const {
 			currentType: currentTypeState,
 			first: firstState,
