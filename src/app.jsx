@@ -16,6 +16,7 @@ function App() {
 		<React.Fragment>
 			<div className="App">
 				<main>
+					<img id="version-logo" src="../react-logo.svg" alt="react logo" />
 					<HeaderCard
 						value={state.intialState.currentType}
 						onChange={changeMeasurement}

@@ -26,10 +26,19 @@
 }
 
 main {
+	position: relative;
 	background-color: #282c34;
 	width: 730px;
 	color: white;
 	padding: 4rem 2rem;
+}
+
+#version-logo {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 4rem;
+	margin: 1rem;
 }
 
 #header-card {
@@ -95,7 +104,7 @@ select:hover {
 	background: black;
 }
 
-@media only screen and (max-width: 680px) {
+@media only screen and (max-width: 720px) {
 	main {
 		width: 95%;
 	}
