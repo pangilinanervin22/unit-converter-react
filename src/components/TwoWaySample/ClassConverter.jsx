@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import HeaderCard from "./HeaderCard";
-import BodyCard from "./BodyCard";
+import HeaderCard from "../HeaderCard";
+import BodyCard from "../BodyCard";
 import * as Converter from "units-converter";
 
-export default class ConverterApp extends Component {
+export default class ClassConverter extends Component {
 	state = {
 		currentType: "length",
 		first: { value: 1, unit: "cm" },
@@ -33,6 +33,10 @@ export default class ConverterApp extends Component {
 		);
 	}
 
+	functionClass() {
+		console.log(this.state);
+	}
+
 	changeMeasurement = (typeValue) => {
 		const defaultUnit = {
 			first: this.getCurrentUnitArray(typeValue)[0].unit,
@@ -43,7 +47,7 @@ export default class ConverterApp extends Component {
 			currentType: typeValue,
 			first: { value: 1, unit: defaultUnit.first },
 			second: {
-				value: this.convertValue(
+				value: this.changeValue(
 					{ value: 1, unit: defaultUnit.first },
 					{ unit: defaultUnit.second },
 					typeValue
@@ -59,32 +63,32 @@ export default class ConverterApp extends Component {
 		if (isFirstChange)
 			this.setState({
 				currentType,
-				first: { unit: first.unit, value },
+				first: { ...first, value },
 				second: {
-					unit: second.unit,
-					value: this.convertValue({ unit: first.unit, value }, { ...second }, currentType),
+					...second,
+					value: this.changeValue({ ...first, value }, { ...second }, currentType),
 				},
 			});
 		else
 			this.setState({
 				currentType,
-				second: { unit: second.unit, value },
+				second: { ...second, value },
 				first: {
-					unit: first.unit,
-					value: this.convertValue({ unit: second.unit, value }, { ...first }, currentType),
+					...first,
+					value: this.changeValue({ ...second, value }, { ...first }, currentType),
 				},
 			});
 	};
 
 	typeChange = (isFirstChange, value) => {
-		const { first, second, currentType } = this.state;
+		const { first, second, currentType } = { ...this.state };
 
 		if (isFirstChange)
 			this.setState({
 				first: { ...first, unit: value },
 				second: {
 					...second,
-					value: this.convertValue({ ...first, unit: value }, { ...second }, currentType),
+					value: this.changeValue({ ...first, unit: value }, { ...second }, currentType),
 				},
 			});
 		else
@@ -92,23 +96,25 @@ export default class ConverterApp extends Component {
 				second: { ...second, unit: value },
 				first: {
 					...first,
-					value: this.convertValue({ ...second, unit: value }, { ...first }, currentType),
+					value: this.changeValue({ ...second, unit: value }, { ...first }, currentType),
 				},
 			});
 	};
 
-	convertValue(baseUnit, changeUnit, currentType) {
+	getCurrentUnitArray = (unit) => {
+		return Converter[unit]().list();
+	};
+
+	changeValue(baseUnit, changeUnit, currentType) {
 		return Converter[currentType](baseUnit.value).from(baseUnit.unit).to(changeUnit.unit).value;
 	}
 
-	getCurrentUnitArray(unit) {
-		return Converter[unit]().list();
-	}
-
 	getSelectArray(unit) {
-		return this.getCurrentUnitArray(unit).map((item) => ({
-			value: item.unit,
-			label: `${item.plural} (${item.unit})`,
-		}));
+		return Converter[unit]()
+			.list()
+			.map((item) => ({
+				value: item.unit,
+				label: `${item.plural} (${item.unit})`,
+			}));
 	}
 }
