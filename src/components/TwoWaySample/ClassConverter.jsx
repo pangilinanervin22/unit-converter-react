@@ -33,88 +33,98 @@ export default class ClassConverter extends Component {
 		);
 	}
 
-	functionClass() {
-		console.log(this.state);
-	}
-
-	changeMeasurement = (typeValue) => {
+	changeMeasurement = (inputValue) => {
 		const defaultUnit = {
-			first: this.getCurrentUnitArray(typeValue)[0].unit,
-			second: this.getCurrentUnitArray(typeValue)[1].unit,
+			first: this.getCurrentUnitArray(inputValue)[0].unit,
+			second: this.getCurrentUnitArray(inputValue)[1].unit,
 		};
 
 		this.setState({
-			currentType: typeValue,
+			currentType: inputValue,
 			first: { value: 1, unit: defaultUnit.first },
 			second: {
-				value: this.changeValue(
+				value: this.convertValue(
 					{ value: 1, unit: defaultUnit.first },
 					{ unit: defaultUnit.second },
-					typeValue
+					inputValue
 				),
 				unit: defaultUnit.second,
 			},
 		});
 	};
 
-	inputChange = (isFirstChange, value) => {
+	inputChange = (isFirstChange, inputValue) => {
 		const { first, second, currentType } = this.state;
 
 		if (isFirstChange)
 			this.setState({
 				currentType,
-				first: { ...first, value },
+				first: { unit: first.unit, value: inputValue },
 				second: {
-					...second,
-					value: this.changeValue({ ...first, value }, { ...second }, currentType),
+					unit: second.unit,
+					value: this.convertValue(
+						{ unit: first.unit, value: inputValue },
+						{ ...second },
+						currentType
+					),
 				},
 			});
 		else
 			this.setState({
 				currentType,
-				second: { ...second, value },
+				second: { unit: second.unit, value: inputValue },
 				first: {
-					...first,
-					value: this.changeValue({ ...second, value }, { ...first }, currentType),
+					unit: first.unit,
+					value: this.convertValue(
+						{ unit: second.unit, value: inputValue },
+						{ ...first },
+						currentType
+					),
 				},
 			});
 	};
 
-	typeChange = (isFirstChange, value) => {
-		const { first, second, currentType } = { ...this.state };
+	typeChange = (isFirstChange, inputValue) => {
+		const { first, second, currentType } = this.state;
 
 		if (isFirstChange)
 			this.setState({
-				first: { ...first, unit: value },
+				first: { value: first.value, unit: inputValue },
 				second: {
 					...second,
-					value: this.changeValue({ ...first, unit: value }, { ...second }, currentType),
+					value: this.convertValue(
+						{ value: first.value, unit: inputValue },
+						{ ...second },
+						currentType
+					),
 				},
 			});
 		else
 			this.setState({
-				second: { ...second, unit: value },
+				second: { value: second.value, unit: inputValue },
 				first: {
 					...first,
-					value: this.changeValue({ ...second, unit: value }, { ...first }, currentType),
+					value: this.convertValue(
+						{ value: second.value, unit: inputValue },
+						{ ...first },
+						currentType
+					),
 				},
 			});
 	};
 
-	getCurrentUnitArray = (unit) => {
-		return Converter[unit]().list();
-	};
-
-	changeValue(baseUnit, changeUnit, currentType) {
+	convertValue(baseUnit, changeUnit, currentType) {
 		return Converter[currentType](baseUnit.value).from(baseUnit.unit).to(changeUnit.unit).value;
 	}
 
+	getCurrentUnitArray(unit) {
+		return Converter[unit]().list();
+	}
+
 	getSelectArray(unit) {
-		return Converter[unit]()
-			.list()
-			.map((item) => ({
-				value: item.unit,
-				label: `${item.plural} (${item.unit})`,
-			}));
+		return this.getCurrentUnitArray(unit).map((item) => ({
+			value: item.unit,
+			label: `${item.plural} (${item.unit})`,
+		}));
 	}
 }
