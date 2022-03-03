@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import HeaderCard from "./HeaderCard";
 import BodyCard from "./BodyCard";
 import * as Converter from "units-converter";
+import logo from "../assets/react-logo.svg";
 
 export default class ConverterApp extends Component {
 	state = {
@@ -16,7 +17,7 @@ export default class ConverterApp extends Component {
 			<React.Fragment>
 				<div className="App">
 					<main>
-						<img id="version-logo" src="../react-logo.svg" alt="react logo" />
+						<img id="version-logo" src={logo} alt="react logo" />
 						<HeaderCard value={currentType} onChange={this.changeMeasurement} />
 						<BodyCard
 							currentType={currentType}
@@ -91,7 +92,7 @@ export default class ConverterApp extends Component {
 			this.setState({
 				first: { value: first.value, unit: inputValue },
 				second: {
-					...second,
+					unit: second.unit,
 					value: this.convertValue(
 						{ value: first.value, unit: inputValue },
 						{ ...second },
@@ -101,14 +102,10 @@ export default class ConverterApp extends Component {
 			});
 		else
 			this.setState({
-				second: { value: second.value, unit: inputValue },
-				first: {
-					...first,
-					value: this.convertValue(
-						{ value: second.value, unit: inputValue },
-						{ ...first },
-						currentType
-					),
+				first: { ...first },
+				second: {
+					unit: inputValue,
+					value: this.convertValue({ ...first }, { unit: inputValue }, currentType),
 				},
 			});
 	};

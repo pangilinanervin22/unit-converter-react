@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import HeaderCard from "../HeaderCard";
 import BodyCard from "../BodyCard";
 import * as Converter from "units-converter";
+import logo from "../../assets/react-logo.svg";
 
 const intialState = {
 	currentType: "length",
@@ -16,7 +17,7 @@ function FunctionConverter() {
 		<React.Fragment>
 			<div className="App">
 				<main>
-					<img id="version-logo" src="../react-logo.svg" alt="react logo" />
+					<img id="version-logo" src={logo} alt="react logo" />
 					<HeaderCard value={state.intialState.currentType} onChange={changeMeasurement} />
 					<BodyCard
 						currentType={state.intialState.currentType}
@@ -110,14 +111,10 @@ function FunctionConverter() {
 				return {
 					intialState: {
 						currentType: currentTypeState,
-						second: { ...secondState, unit: action.value },
-						first: {
-							unit: firstState.unit,
-							value: changeValue(
-								{ value: secondState.value, unit: action.value },
-								{ unit: firstState.unit },
-								currentTypeState
-							),
+						first: { ...firstState },
+						second: {
+							unit: secondState.unit,
+							value: changeValue({ ...firstState }, { unit: action.value }, currentTypeState),
 						},
 					},
 				};
