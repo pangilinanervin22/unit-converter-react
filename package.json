@@ -7,20 +7,20 @@
 		"dev": "vite",
 		"build": "vite build",
 		"preview": "vite preview",
-		"predeploy": "npm run build",
+		"predeploy": "pnpm run build",
 		"deploy": "gh-pages -d dist"
 	},
 	"dependencies": {
-		"gh-pages": "^4.0.0",
 		"prop-types": "^15.8.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"sass": "^1.56.1",
+		"sass": "^1.60.0",
 		"units-converter": "1.0.3"
 	},
 	"devDependencies": {
 		"@vitejs/plugin-react": "^2.2.0",
-		"vite": "^3.2.3",
+		"gh-pages": "^4.0.0",
+		"vite": "^3.2.5",
 		"vite-plugin-pwa": "^0.14.7"
 	}
 }
